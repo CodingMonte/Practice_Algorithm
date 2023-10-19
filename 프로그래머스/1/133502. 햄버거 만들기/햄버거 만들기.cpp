@@ -3,35 +3,14 @@
 using namespace std;
 
 int solution(vector<int> ingredient) {
-    int answer1 = 0;
-    int answer2 = 0;
-    vector<int> bbang;
-    int flag = 0;
-    for(int n : ingredient)
-    {
-        bbang.push_back(n);
-        int cnt = bbang.size();
-        if(cnt >= 4 && bbang[cnt - 4] == 1 && bbang[cnt - 3] == 2 && bbang[cnt - 2] == 3 && bbang[cnt - 1] == 1)
-        {
-            if(flag)
-            {
-                answer1++;
-                bbang.erase(bbang.end() - 4,bbang.end());
-            }
-            flag++;
-        }
-    }
-    bbang.clear();
-    for(int n : ingredient)
-    {
-        bbang.push_back(n);
-        int cnt = bbang.size();
-        if(cnt >= 4 && bbang[cnt - 4] == 1 && bbang[cnt - 3] == 2 && bbang[cnt - 2] == 3 && bbang[cnt - 1] == 1)
-        {
-                answer2++;
-                bbang.erase(bbang.end() - 4,bbang.end());
-        }
-    }
+    int answer = 0;
+    vector<int> v = { -1 };
+    for(int x : ingredient){
+        if(v.back() == 1 && x == 2) v.back() = 12;
+        else if(v.back() == 12 && x == 3) v.back() = 123;
+        else if(v.back() == 123 && x == 1) answer++, v.pop_back();
+        else v.push_back(x);
+    }    
 
-    return answer1 >= answer2 ? answer1:answer2;
+    return answer;
 }
