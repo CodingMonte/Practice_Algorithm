@@ -1,18 +1,26 @@
-#include <string>
+#include <iostream>
 #include <vector>
 
 using namespace std;
 
+vector<int> memo;
+bool flag = true;
+
 int solution(int n) {
-    int answer = 0;
-    vector<int> p;
-    p.push_back(0);
-    p.push_back(1);
-    
-    for(int i = 2; i <= n; i++)
+    if (n <= 1) {
+        return n;
+    }
+    if(flag)
     {
-        p.push_back((p[i-2] + p[i - 1]) % 1234567);
+        flag = false;
+        memo = vector<int>(n+1,-1);
     }
     
-    return p.back();
+    if (memo[n] != -1) {
+        return memo[n]%1234567;
+    }
+
+    memo[n] = solution(n - 1) + solution(n - 2);
+
+    return memo[n]%1234567;
 }
